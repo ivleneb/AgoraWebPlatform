@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MemberDonation{% endblock %}
+
+{% block body %}
+    <h1>MemberDonation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ member_donation.id }}</td>
+            </tr>
+            <tr>
+                <th>Socio</th>
+                <td>{{ member_donation.member.name ~ ' ' ~ member_donation.member.fatherLastname }}</td>
+            </tr>
+            <tr>
+                <th>Amount</th>
+                <td>{{ member_donation.amount }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ member_donation.description }}</td>
+            </tr>
+            <tr>
+                <th>RegisterDate</th>
+                <td>{{ member_donation.registerDate ? member_donation.registerDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Registrado por</th>
+                <td>{{ member_donation.registeredBy.name }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('member_donation_index') }}">back to list</a>
+
+    <a href="{{ path('member_donation_edit', {'id': member_donation.id}) }}">edit</a>
+
+    {{ include('member_donation/_delete_form.html.twig') }}
+{% endblock %}

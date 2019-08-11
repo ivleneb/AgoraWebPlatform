@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New MembershipFees{% endblock %}
+
+{% block body %}
+    <h1>Create new MembershipFees</h1>
+    <h3>Cuota por mes: {{ feeValue }}</h3>
+    {{ include('membership_fees/_form.html.twig') }}
+
+    <a href="{{ path('membership_fees_index') }}">back to list</a>
+{% endblock %}

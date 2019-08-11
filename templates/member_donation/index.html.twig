@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MemberDonation index{% endblock %}
+
+{% block body %}
+{% include 'menu.html.twig' %}
+    <h1>MemberDonation index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>RegisterDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for member_donation in member_donations %}
+            <tr>
+                <td>{{ member_donation.id }}</td>
+                <td>{{ member_donation.amount }}</td>
+                <td>{{ member_donation.description }}</td>
+                <td>{{ member_donation.registerDate ? member_donation.registerDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a href="{{ path('member_donation_show', {'id': member_donation.id}) }}">show</a>
+                    <a href="{{ path('member_donation_edit', {'id': member_donation.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('member_donation_new') }}">Create new</a>
+{% endblock %}

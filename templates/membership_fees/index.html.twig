@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MembershipFees index{% endblock %}
+
+{% block body %}
+{% include 'menu.html.twig' %}
+    <h1>MembershipFees index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>DNI Socio</th>
+                <th>Month</th>
+                <th>Year</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for membership_fee in membership_fees %}
+            <tr>
+                <td>{{ membership_fee.id }}</td>
+                <td>{{ membership_fee.member.dni }}</td>
+                <td>{{ membership_fee.month }}</td>
+                <td>{{ membership_fee.year }}</td>
+                <td>
+                    <a href="{{ path('membership_fees_show', {'id': membership_fee.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('membership_fees_edit', {'id': membership_fee.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('membership_fees_new') }}">Create new</a>
+    {% endif %}
+{% endblock %}

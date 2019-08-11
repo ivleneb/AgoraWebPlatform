@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MembershipFees{% endblock %}
+
+{% block body %}
+    <h1>MembershipFees</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ membership_fee.id }}</td>
+            </tr>
+            <tr>
+                <th>DNI Socio</th>
+                <td>{{ membership_fee.member.dni }}</td>
+            </tr>
+            <tr>
+                <th>Socio</th>
+                <td>{{ membership_fee.member.name ~ ' ' ~ membership_fee.member.fatherLastname }}</td>
+            </tr>
+            <tr>
+                <th>RegisterDate</th>
+                <td>{{ membership_fee.registerDate ? membership_fee.registerDate|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Month</th>
+                <td>{{ membership_fee.month }}</td>
+            </tr>
+            <tr>
+                <th>Year</th>
+                <td>{{ membership_fee.year }}</td>
+            </tr>
+            <tr>
+                <th>Registrado por</th>
+                <td>{{ membership_fee.registeredBy.name }}</td>
+            </tr
+        </tbody>
+    </table>
+
+    <a href="{{ path('membership_fees_index') }}">back to list</a>
+    {% if is_granted('ROLE_ADMIN') %}
+    <a href="{{ path('membership_fees_edit', {'id': membership_fee.id}) }}">edit</a>
+
+    {{ include('membership_fees/_delete_form.html.twig') }}
+    {% endif %}
+{% endblock %}

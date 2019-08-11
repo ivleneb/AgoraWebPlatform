@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit MembershipFees{% endblock %}
+
+{% block body %}
+    <h1>Edit MembershipFees</h1>
+
+    {{ include('membership_fees/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('membership_fees_index') }}">back to list</a>
+
+    {{ include('membership_fees/_delete_form.html.twig') }}
+{% endblock %}

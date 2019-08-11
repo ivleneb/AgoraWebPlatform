@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Member index{% endblock %}
+
+{% block body %}
+{% include 'menu.html.twig' %}
+
+    <h1>Member index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>FatherLastname</th>
+                <th>MotherLastname</th>
+                {#<th>Birthdate</th>
+                <th>Address</th>
+                <th>District</th>
+                <th>Province</th>
+                <th>Region</th>
+                <th>DegreeOfInstruction</th>
+                <th>CivilStatus</th>#}
+                <th>Dni</th>
+                <th>CellphoneNumber</th>
+                <th>NonVirtualRegister</th>
+                <th>RegisterDate</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for member in members %}
+            <tr>
+                <td>{{ member.id }}</td>
+                <td>{{ member.name }}</td>
+                <td>{{ member.fatherLastname }}</td>
+                <td>{{ member.motherLastname }}</td>
+                {# <td>{{ member.birthdate ? member.birthdate|date('Y-m-d') : '' }}</td>
+                <td>{{ member.address }}</td>
+                <td>{{ member.district }}</td>
+                <td>{{ member.province }}</td>
+                <td>{{ member.region }}</td>
+                <td>{{ member.degreeOfInstruction }}</td>
+                <td>{{ member.civilStatus }}</td> #}
+                <td>{{ member.dni }}</td>
+                <td>{{ member.cellphoneNumber }}</td>
+                <td>{{ member.nonVirtualRegister ? 'Yes' : 'No' }}</td>
+                <td>{{ member.registerDate ? member.registerDate|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('member_show', {'id': member.id}) }}">show</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a href="{{ path('member_edit', {'id': member.id}) }}">edit</a>
+                    {% endif %}
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="16">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('member_new') }}">Create new</a>
+{% endblock %}

@@ -1,0 +1,113 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Socios {% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+<div>
+  {# read and display just one flash message type #}
+  {% for message in app.flashes('found') %}
+      <div class="alert alert-success">
+          {{ message }}
+      </div>
+  {% endfor %}
+  {% for message in app.flashes('notFound') %}
+      <div class="alert alert-danger">
+          {{ message }}
+      </div>
+  {% endfor %}
+</div>
+<div class="example-wrapper">
+    <h1>Búsqueda de Socios ✅</h1>
+    <div>
+      {{ form_start(form) }}
+          <div class="my-custom-class-for-errors">
+              {{ form_errors(form) }}
+          </div>
+
+          <div class="row">
+              <div class="col">
+                  {{ form_row(form.type, { 'attr': {'class': 'radio_choice'} }) }}
+              </div>
+              <div class="col" id="type_dni" style="display:none">
+                  {{ form_row(form.dni) }}
+              </div>
+              <div class="col" id="type_name" style="display:none">
+                  {{ form_row(form.name) }}
+                  {{ form_row(form.fatherLastname) }}
+                  {{ form_row(form.motherLastname) }}
+              </div>
+              <div id="button" style="display:none">
+                  {{ form_row(form.Buscar)}}
+              </div>
+          </div>
+      {{ form_end(form) }}
+    </div>
+    <div class="results">
+      {% if member %}
+      <h1>Socio</h1>
+
+      <table class="table">
+          <tbody>
+              <tr>
+                  <th>Nombre</th>
+                  <td>{{ member.name }}</td>
+              </tr>
+              <tr>
+                  <th>Apell. Paterno</th>
+                  <td>{{ member.fatherLastname }}</td>
+              </tr>
+              <tr>
+                  <th>Apell. Materno</th>
+                  <td>{{ member.motherLastname }}</td>
+              </tr>
+              <tr>
+                  <th>Dni</th>
+                  <td>{{ member.dni }}</td>
+              </tr>
+              <tr>
+                  <th>Registrado el</th>
+                  <td>{{ member.registerDate ? member.registerDate|date('Y-m-d') : '' }}</td>
+              </tr>
+              <tr>
+                  <th>Última cuota</th>
+                  {% if lastDate %}
+                  <td>{{ date(lastDate) |date('M-Y') }}</td>
+                  {% else %}
+                  <td>No registra aportes</td>
+                  {% endif %}
+              </tr>
+          </tbody>
+      </table>
+
+      {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+  <script>
+    var radios = document.getElementById("{{ form.type.vars.id }}").getElementsByTagName('input');
+    var typeDni = document.getElementById('type_dni');
+    var typeName = document.getElementById('type_name');
+    var button = document.getElementById('button');
+    radios[0].addEventListener('change', function(){
+      if(this.checked){
+        typeDni.style.display = "block";
+        typeName.style.display = "none";
+        button.style.display = "block";
+      }
+    });
+
+    radios[1].addEventListener('change', function(){
+      if(this.checked){
+        typeDni.style.display = "none";
+        typeName.style.display = "block";
+        button.style.display = "block";
+      }
+    });
+  </script>
+{% endblock %}
